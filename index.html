@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BCIT Binary Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Binary Integer Converter</h1> 
+    <input id="num"> 
+    <input id="bits"> 
+    <button onclick="calculate()">Calculate</button>
+    <div class="results">
+        <h2 id="result">Results</h2>
+        <p>Unsigned: <textarea id="unsigned" readonly></textarea></p>
+        <p>Signed Magnitude: <textarea id="sm" readonly></textarea></textarea></p>
+        <p>One's Complement: <textarea id="1c" readonly></textarea></p>
+        <p>Two's Complement: <textarea id="2c" readonly></textarea></p>
+        <p>Excess 2n-1: <textarea id="excess" readonly></textarea></p>
+        <p>Bias: <textarea id="bias" readonly></textarea></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

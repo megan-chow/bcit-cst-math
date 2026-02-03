@@ -1,0 +1,22 @@
+body {
+    background-color: beige;
+    font-family: sans-serif;
+    max-width: 600px;
+    margin: auto;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: .5rem;
+}
+
+button {
+    margin-right: .5rem;
+    padding: .5rem 1rem;
+}
+
+textarea {
+    resize: none;
+}
