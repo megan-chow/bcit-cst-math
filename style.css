@@ -17,6 +17,17 @@ button {
     padding: .5rem 1rem;
 }
 
+.output-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.output-row p {
+    width: 120px;
+    margin-right: 10px;
+}
 textarea {
     resize: none;
+    width: 100%;
 }

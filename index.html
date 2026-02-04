@@ -9,17 +9,39 @@
 
 <body>
     <h1>Binary Integer Converter</h1> 
+    <p class="label">Number to Convert in Decimal:</p>
     <input id="num"> 
+    <p class="label">Number of Bits:</p>
     <input id="bits"> 
     <button onclick="calculate()">Calculate</button>
     <div class="results">
         <h2 id="result">Results</h2>
-        <p>Unsigned: <textarea id="unsigned" readonly></textarea></p>
-        <p>Signed Magnitude: <textarea id="sm" readonly></textarea></textarea></p>
-        <p>One's Complement: <textarea id="1c" readonly></textarea></p>
-        <p>Two's Complement: <textarea id="2c" readonly></textarea></p>
-        <p>Excess 2n-1: <textarea id="excess" readonly></textarea></p>
-        <p>Bias: <textarea id="bias" readonly></textarea></p>
+        <div class="output-row">
+            <p class="label">Unsigned: </p>
+            <textarea class="binary-text" id="unsigned" readonly></textarea>
+        </div>
+        <div class="output-row">
+            <p class="label">Signed Magnitude: </p>
+            <textarea class="binary-text" id="sm" readonly></textarea>
+        </div>
+        <div class="output-row">
+            <p class="label">One's Complement: </p>
+            <textarea class="binary-text" id="1c" readonly></textarea>
+        </div>
+        <div class="output-row">
+            <p class="label">Two's Complement: </p>
+            <textarea class="binary-text" id="2c" readonly></textarea>
+        </div>
+        <div class="output-row">
+            <p class="label">Excess 2n-1: </p>
+            <textarea class="binary-text" id="excess" readonly></textarea>
+        </div>
+        <div class="output-row">
+            <p class="label">Bias: </p>
+            <textarea class="binary-text" id="bias" readonly></textarea>
+        </div>
+        
+        
     </div>
     <script src="script.js"></script>
 </body>
