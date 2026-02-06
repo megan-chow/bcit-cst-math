@@ -96,3 +96,78 @@ function invert(num) {
   }
   return n;
 }
+
+function convert_to_ieee() {
+  let num = document.getElementById("float-num").value;
+  num = parseFloat(num);
+  console.log(num);
+  let sign = 0;
+  if (num < 0) {
+    sign = 1;
+  }
+  let mag = Math.abs(num);
+
+  let exp = 127;
+  while (mag / Math.pow(2, exp) < 1) {
+    exp -= 1;
+  }
+
+  let mantissa = "";
+  let remainder = mag - Math.pow(2, exp);
+  console.log(remainder);
+
+  for (let i = 0; i < 23; i++) {
+    let place = exp - 1 - i;
+    if (remainder / Math.pow(2, place) >= 1) {
+      mantissa += '1';
+      remainder -= Math.pow(2, place);
+    }
+    else {
+      mantissa += '0';
+    }
+  }
+
+  let exponent = (exp + 127).toString(2).padStart(8, '0');
+  // let mantissa = '0'.repeat(23);
+  document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
+  document.getElementById("sign").textContent = sign;
+  document.getElementById("exponent").textContent = exponent;
+  document.getElementById("mantissa").textContent = mantissa;
+}
+
+function convert_to_bcit() {
+  let num = document.getElementById("float-num").value;
+  num = parseFloat(num);
+  console.log(num);
+  let sign = 0;
+  if (num < 0) {
+    sign = 1;
+  }
+  let mag = Math.abs(num);
+
+  let exp = 7;
+  while (mag / Math.pow(2, exp) < 1) {
+    exp -= 1;
+  }
+
+  let mantissa = "";
+  let remainder = mag - Math.pow(2, exp);
+  console.log(remainder);
+
+  for (let i = 0; i < 5; i++) {
+    let place = exp - 1 - i;
+    if (remainder / Math.pow(2, place) >= 1) {
+      mantissa += '1';
+      remainder -= Math.pow(2, place);
+    }
+    else {
+      mantissa += '0';
+    }
+  }
+
+  let exponent = (exp + 7).toString(2).padStart(4, '0');
+  document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
+  document.getElementById("sign").textContent = sign;
+  document.getElementById("exponent").textContent = exponent;
+  document.getElementById("mantissa").textContent = mantissa;
+}
