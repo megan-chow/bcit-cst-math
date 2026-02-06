@@ -10,7 +10,7 @@
 <body>
     <h1>Binary Integer Converter</h1> 
     <p class="label">Number to Convert in Decimal:</p>
-    <input id="num"> 
+    <input type="text" id="num" pattern="[0-9]"> 
     <p class="label">Number of Bits:</p>
     <input id="bits"> 
     <button onclick="calculate()">Calculate</button>
@@ -40,9 +40,8 @@
             <p class="label">Bias: </p>
             <textarea class="binary-text" id="bias" readonly></textarea>
         </div>
-        
-        
     </div>
+    
     <script src="script.js"></script>
 </body>
 

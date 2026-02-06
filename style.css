@@ -7,14 +7,19 @@ body {
 
 input {
     display: block;
+    height: 64px;
     width: 100%;
     margin-bottom: 1rem;
-    padding: .5rem;
+    border-radius: 10px;
 }
 
 button {
     margin-right: .5rem;
     padding: .5rem 1rem;
+}
+
+.results {
+    width: 100%;
 }
 
 .output-row {
@@ -24,10 +29,12 @@ button {
 }
 
 .output-row p {
-    width: 120px;
+    width: 240px;
     margin-right: 10px;
 }
+
 textarea {
     resize: none;
     width: 100%;
+    border-radius: 10px;
 }
