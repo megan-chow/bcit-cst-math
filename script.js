@@ -203,6 +203,10 @@ function convert_to_ieee() {
 }
 
 function convert_to_bcit() {
+  const min_exp = -6;
+  const max_exp = 7;
+  const len_mantissa = 5;
+
   let num = document.getElementById("float-num").value;
   num = parseFloat(num);
   console.log(num);
@@ -212,16 +216,20 @@ function convert_to_bcit() {
   }
   let mag = Math.abs(num);
 
-  let exp = 7;
-  while (mag / Math.pow(2, exp) < 1) {
+  let exp = max_exp;
+  while (mag / Math.pow(2, exp) < 1 && exp > min_exp) {
     exp -= 1;
   }
+  console.log("exp: " + exp);
 
   let mantissa = "";
-  let remainder = mag - Math.pow(2, exp);
+  let remainder = mag;
+  if (mag >= Math.pow(2, exp)) {
+    remainder = mag - Math.pow(2, exp);
+  }
   console.log(remainder);
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < len_mantissa; i++) {
     let place = exp - 1 - i;
     if (remainder / Math.pow(2, place) >= 1) {
       mantissa += '1';
@@ -232,7 +240,13 @@ function convert_to_bcit() {
     }
   }
 
-  let exponent = (exp + 7).toString(2).padStart(4, '0');
+  let exponent;
+  if (exp == min_exp) {
+    exponent = '0'.repeat(4);
+  }
+  else {
+    exponent = (exp + max_exp).toString(2).padStart(8, '0');
+  }
   document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
   document.getElementById("sign").textContent = sign;
   document.getElementById("exponent").textContent = exponent;
