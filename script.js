@@ -1,3 +1,32 @@
+function displayContent() {
+  const selector = document.getElementById('content-selector');
+  const selectedValue = selector.value;
+  const cont = document.getElementById("content");
+
+  let file = '';
+
+  if (selectedValue === "binary") {
+    file = './binary.html';
+  }
+  else if (selectedValue === 'float') {
+    file = './float.html';
+  }
+  else {
+    cont.innerHTML = '';
+    return;
+  }
+
+fetch(file)
+  .then(response => response.text())
+  .then(html => {
+    cont.innerHTML = html;
+  })
+  .catch(err => {
+    cont.innerHTML = '<p>Error loading content.</p>';
+    console.error(err);
+  });
+}
+
 function calculate() {
   let num = document.getElementById("num").value;
   let bits = document.getElementById("bits").value;
@@ -98,6 +127,10 @@ function invert(num) {
 }
 
 function convert_to_ieee() {
+  const min_exp = -126;
+  const max_exp = 127;
+  const len_mantissa = 23;
+
   let num = document.getElementById("float-num").value;
   num = parseFloat(num);
   console.log(num);
@@ -107,16 +140,20 @@ function convert_to_ieee() {
   }
   let mag = Math.abs(num);
 
-  let exp = 127;
-  while (mag / Math.pow(2, exp) < 1) {
+  let exp = max_exp;
+  while (mag / Math.pow(2, exp) < 1 && exp > min_exp) {
     exp -= 1;
   }
+  console.log("exp: " + exp);
 
   let mantissa = "";
-  let remainder = mag - Math.pow(2, exp);
+  let remainder = mag;
+  if (mag >= Math.pow(2, exp)) {
+    remainder = mag - Math.pow(2, exp);
+  }
   console.log(remainder);
 
-  for (let i = 0; i < 23; i++) {
+  for (let i = 0; i < len_mantissa; i++) {
     let place = exp - 1 - i;
     if (remainder / Math.pow(2, place) >= 1) {
       mantissa += '1';
@@ -127,8 +164,13 @@ function convert_to_ieee() {
     }
   }
 
-  let exponent = (exp + 127).toString(2).padStart(8, '0');
-  // let mantissa = '0'.repeat(23);
+  let exponent;
+  if (exp == min_exp) {
+    exponent = '0'.repeat(8);
+  }
+  else {
+    exponent = (exp + max_exp).toString(2).padStart(8, '0');
+  }
   document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
   document.getElementById("sign").textContent = sign;
   document.getElementById("exponent").textContent = exponent;

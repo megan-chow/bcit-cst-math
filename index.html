@@ -1,48 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+        
+    <head>
+        <meta charset="utf-8">
+        <title>BCIT Binary Converter</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>BCIT Binary Converter</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <h1>Binary Integer Converter</h1> 
-    <p class="label">Number to Convert in Decimal:</p>
-    <input type="text" id="num" pattern="[0-9]"> 
-    <p class="label">Number of Bits:</p>
-    <input id="bits"> 
-    <button onclick="calculate()">Calculate</button>
-    <div class="results">
-        <h2 id="result">Results</h2>
-        <div class="output-row">
-            <p class="label">Unsigned: </p>
-            <textarea class="binary-text" id="unsigned" readonly></textarea>
-        </div>
-        <div class="output-row">
-            <p class="label">Signed Magnitude: </p>
-            <textarea class="binary-text" id="sm" readonly></textarea>
-        </div>
-        <div class="output-row">
-            <p class="label">One's Complement: </p>
-            <textarea class="binary-text" id="1c" readonly></textarea>
-        </div>
-        <div class="output-row">
-            <p class="label">Two's Complement: </p>
-            <textarea class="binary-text" id="2c" readonly></textarea>
-        </div>
-        <div class="output-row">
-            <p class="label">Excess 2n-1: </p>
-            <textarea class="binary-text" id="excess" readonly></textarea>
-        </div>
-        <div class="output-row">
-            <p class="label">Bias: </p>
-            <textarea class="binary-text" id="bias" readonly></textarea>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
-</body>
+    <body>
+        <header></header>
+        <select id="content-selector" onchange="displayContent()">
+            <option value="binary" selected>Binary Conversion</option>
+            <option value="float">Floating Point</option>
+        </select>
+        <div id="content"></div>
+        <footer>© 2026 Megan Chow</footer>
+        <script src="script.js"></script>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                displayContent();
+            });
+        </script>
+    </body>
 
 </html>
