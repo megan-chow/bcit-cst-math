@@ -16,14 +16,14 @@ function displayContent() {
     return;
   }
 
-fetch(file)
-  .then(response => response.text())
-  .then(html => {
-    cont.innerHTML = html;
-  })
-  .catch(err => {
-    cont.innerHTML = '<p>Error loading content.</p>';
-    console.error(err);
+  fetch(file)
+    .then(response => response.text())
+    .then(html => {
+      cont.innerHTML = html;
+    })
+    .catch(err => {
+      cont.innerHTML = '<p>Error loading content.</p>';
+      console.error(err);
   });
 }
 
@@ -87,6 +87,31 @@ function calculate() {
     }
   }
   document.getElementById("2c").textContent = twoc;
+
+  
+  /* 
+   * Excess 2^(n - 1)
+   * 
+  */
+  let bias = Math.pow(2, bits - 1);
+  let excess = bias + num;
+  if (excess < 0 || excess > (Math.pow(2, bits) - 1)) {
+    excess = "Invalid";
+  }
+  document.getElementById("excess").textContent = excess.toString(2).padStart(bits, '0');
+
+  
+  /* 
+   * Bias 2^(n - 1) - 1
+   * 
+  */
+  bias = Math.pow(2, bits - 1) - 1;
+  let bias_num = bias + num;
+  if (bias_num < 0 || bias_num > (Math.pow(2, bits))) {
+    bias_num = "Invalid";
+  }
+  document.getElementById("bias").textContent = bias_num.toString(2).padStart(bits, '0');
+
 }
 
 function add_bit(num, bits) {
