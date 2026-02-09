@@ -162,6 +162,9 @@ function convert_float() {
       convert_to_bcit();
     }
   }
+  else if (mode === "to-dec") {
+    convert_to_dec();
+  }
 }
 
 function convert_to_ieee() {
@@ -264,4 +267,48 @@ function convert_to_bcit() {
   document.getElementById("sign").textContent = sign;
   document.getElementById("exponent").textContent = exponent;
   document.getElementById("mantissa").textContent = mantissa;
+}
+
+function convert_to_dec() {
+  const format = document.getElementById("format").value;
+  let exp_len, mant_len, bias;
+  if (format === "ieee32") {
+    exp_len = 8;
+    mant_len = 23;
+    bias = 127;
+  }
+  else if (format === "bcit") {
+    exp_len = 4;
+    mant_len = 5;
+    bias = 7;
+  }
+
+  let num = document.getElementById("float-num").value.toString();
+  console.log("num: " + num);
+  let sign = "";
+  if (num[0] === "1") {
+    sign = "-";
+  }
+  let mag = 0.0;
+  let exponent = num.substring(1, 1 + exp_len);
+  console.log("exponent bits: " + exponent);
+  exponent = parseInt(exponent, 2) - bias;
+  console.log("exponent: " + exponent);
+  if (exponent > -bias) {
+    mag += Math.pow(2, exponent);
+  }
+  let mantissa = num.substring(1 + exp_len);
+  console.log("mantissa bits: " + mantissa);
+
+  for (let i = 0; i < mant_len; i++) {
+    mag += Number(mantissa[i]) * Math.pow(2, exponent - i - 1);
+  }
+
+  console.log(mag);
+
+  document.getElementById("full").textContent = sign + mag;
+  document.getElementById("sign").textContent = "";
+  document.getElementById("exponent").textContent = "";
+  document.getElementById("mantissa").textContent = "";
+
 }

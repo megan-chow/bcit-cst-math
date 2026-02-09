@@ -1,9 +1,18 @@
 <body>
-    <h1>Binary Floating Point Converter</h1> 
+    <h1>Binary Floating Point Converter</h1>
     <p class="label">Number to Convert in Decimal:</p>
-    <input type="text" id="float-num" pattern="[0-9]."> 
-    <button onclick="convert_to_ieee()">Convert to IEEE</button>
-    <button onclick="convert_to_bcit()">Convert to BCIT</button>
+    <input type="text" id="float-num" pattern="[0-9].">
+    <button onclick="convert_float()">Convert</button>
+    <!-- <button onclick="convert_to_ieee()">Convert to IEEE</button>
+    <button onclick="convert_to_bcit()">Convert to BCIT</button> -->
+    <select id="mode">
+        <option value="to-bin">Decimal → Binary</option>
+        <option value="to-dec">Binary → Decimal</option>
+    </select>
+    <select id="format">
+        <option value="ieee32" selected>IEEE Single Precision (32-bit)</option>
+        <option value="bcit">BCIT Floating Point</option>
+    </select>
     <div class="results">
         <h2 id="result">Results</h2>
         <div class="output-row">
