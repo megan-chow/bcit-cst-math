@@ -151,6 +151,19 @@ function invert(num) {
   return n;
 }
 
+function convert_float() {
+  const mode = document.getElementById("mode").value;
+  const format = document.getElementById("format").value;
+  if (mode === "to-bin") {
+    if (format === "ieee32") {
+      convert_to_ieee();
+    }
+    else {
+      convert_to_bcit();
+    }
+  }
+}
+
 function convert_to_ieee() {
   const min_exp = -127;
   const max_exp = 127;
@@ -245,7 +258,7 @@ function convert_to_bcit() {
     exponent = '0'.repeat(4);
   }
   else {
-    exponent = (exp + max_exp).toString(2).padStart(8, '0');
+    exponent = (exp + max_exp).toString(2).padStart(4, '0');
   }
   document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
   document.getElementById("sign").textContent = sign;
