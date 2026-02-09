@@ -283,7 +283,7 @@ function convert_to_dec() {
     bias = 7;
   }
 
-  let num = document.getElementById("float-num").value.toString();
+  let num = document.getElementById("float-num").value.toString().replace(/\s+/g, '');
   console.log("num: " + num);
   let sign = "";
   if (num[0] === "1") {
