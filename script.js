@@ -152,7 +152,7 @@ function invert(num) {
 }
 
 function convert_to_ieee() {
-  const min_exp = -126;
+  const min_exp = -127;
   const max_exp = 127;
   const len_mantissa = 23;
 
@@ -203,7 +203,7 @@ function convert_to_ieee() {
 }
 
 function convert_to_bcit() {
-  const min_exp = -6;
+  const min_exp = -7;
   const max_exp = 7;
   const len_mantissa = 5;
 
