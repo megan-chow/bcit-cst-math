@@ -18,6 +18,11 @@ button {
     padding: .5rem 1rem;
 }
 
+select {
+    margin-right: .5rem;
+    padding: .5rem 1rem;
+}
+
 .results {
     width: 100%;
 }
