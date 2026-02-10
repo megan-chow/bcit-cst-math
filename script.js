@@ -155,22 +155,30 @@ function convert_float() {
   const mode = document.getElementById("mode").value;
   const format = document.getElementById("format").value;
   if (mode === "to-bin") {
-    if (format === "ieee32") {
-      convert_to_ieee();
-    }
-    else {
-      convert_to_bcit();
-    }
+    convert_to_bin();
   }
   else if (mode === "to-dec") {
     convert_to_dec();
   }
 }
 
-function convert_to_ieee() {
-  const min_exp = -126;
-  const max_exp = 127;
-  const len_mantissa = 23;
+function convert_to_bin() {
+  const format = document.getElementById("format").value;
+  let exp_len, mant_len, bias;
+  if (format === "ieee32") {
+    exp_len = 8;
+    mant_len = 23;
+    bias = 127;
+  }
+  else if (format === "bcit") {
+    exp_len = 4;
+    mant_len = 5;
+    bias = 7;
+  }
+
+  // const min_exp = -126;
+  // const max_exp = 127;
+  // const len_mantissa = 23;
 
   let num = document.getElementById("float-num").value;
   num = parseFloat(num);
@@ -181,21 +189,31 @@ function convert_to_ieee() {
   }
   let mag = Math.abs(num);
 
-  let exp = max_exp;
-  while (mag / Math.pow(2, exp) < 1 && exp >= min_exp) {
+  let exp = bias;
+  while (mag / Math.pow(2, exp) < 1 && exp > -bias) {
     exp -= 1;
   }
   console.log("exp: " + exp);
 
-  let mantissa = "";
+
+  let exponent;
+  if (exp == -bias) {
+    exponent = '0'.repeat(exp_len);
+    exp += 1;
+  }
+  else {
+    exponent = (exp + bias).toString(2).padStart(exp_len, '0');
+  }
+
   let remainder = mag;
   if (mag >= Math.pow(2, exp)) {
     remainder = mag - Math.pow(2, exp);
   }
-  console.log(remainder);
 
-  for (let i = 0; i < len_mantissa; i++) {
+  let mantissa = "";
+  for (let i = 0; i < mant_len; i++) {
     let place = exp - 1 - i;
+    // console.log("place: " + place + ", remainder: " + remainder);
     if (remainder / Math.pow(2, place) >= 1) {
       mantissa += '1';
       remainder -= Math.pow(2, place);
@@ -205,69 +223,12 @@ function convert_to_ieee() {
     }
   }
 
-  let exponent;
-  if (exp == min_exp) {
-    exponent = '0'.repeat(8);
-  }
-  else {
-    exponent = (exp + max_exp).toString(2).padStart(8, '0');
-  }
   document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
   document.getElementById("sign").textContent = sign;
   document.getElementById("exponent").textContent = exponent;
   document.getElementById("mantissa").textContent = mantissa;
 }
 
-function convert_to_bcit() {
-  const min_exp = -7;
-  const max_exp = 7;
-  const len_mantissa = 5;
-
-  let num = document.getElementById("float-num").value;
-  num = parseFloat(num);
-  console.log(num);
-  let sign = 0;
-  if (num < 0) {
-    sign = 1;
-  }
-  let mag = Math.abs(num);
-
-  let exp = max_exp;
-  while (mag / Math.pow(2, exp) < 1 && exp > min_exp) {
-    exp -= 1;
-  }
-  console.log("exp: " + exp);
-
-  let mantissa = "";
-  let remainder = mag;
-  if (mag >= Math.pow(2, exp)) {
-    remainder = mag - Math.pow(2, exp);
-  }
-  console.log(remainder);
-
-  for (let i = 0; i < len_mantissa; i++) {
-    let place = exp - 1 - i;
-    if (remainder / Math.pow(2, place) >= 1) {
-      mantissa += '1';
-      remainder -= Math.pow(2, place);
-    }
-    else {
-      mantissa += '0';
-    }
-  }
-
-  let exponent;
-  if (exp == min_exp) {
-    exponent = '0'.repeat(4);
-  }
-  else {
-    exponent = (exp + max_exp).toString(2).padStart(4, '0');
-  }
-  document.getElementById("full").textContent = "" + sign + " " + exponent + " " + mantissa;
-  document.getElementById("sign").textContent = sign;
-  document.getElementById("exponent").textContent = exponent;
-  document.getElementById("mantissa").textContent = mantissa;
-}
 
 function convert_to_dec() {
   const format = document.getElementById("format").value;
@@ -284,7 +245,11 @@ function convert_to_dec() {
   }
 
   let num = document.getElementById("float-num").value.toString().replace(/\s+/g, '');
-  console.log("num: " + num);
+  if (num.length != (1 + exp_len + mant_len)) {
+    console.log("Invalid length");
+    return;
+  }
+  // console.log("num: " + num);
   let sign = "";
   if (num[0] === "1") {
     sign = "-";
