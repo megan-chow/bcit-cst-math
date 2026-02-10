@@ -168,7 +168,7 @@ function convert_float() {
 }
 
 function convert_to_ieee() {
-  const min_exp = -127;
+  const min_exp = -126;
   const max_exp = 127;
   const len_mantissa = 23;
 
@@ -182,7 +182,7 @@ function convert_to_ieee() {
   let mag = Math.abs(num);
 
   let exp = max_exp;
-  while (mag / Math.pow(2, exp) < 1 && exp > min_exp) {
+  while (mag / Math.pow(2, exp) < 1 && exp >= min_exp) {
     exp -= 1;
   }
   console.log("exp: " + exp);
@@ -296,6 +296,9 @@ function convert_to_dec() {
   console.log("exponent: " + exponent);
   if (exponent > -bias) {
     mag += Math.pow(2, exponent);
+  }
+  else {
+    exponent += 1;
   }
   let mantissa = num.substring(1 + exp_len);
   console.log("mantissa bits: " + mantissa);
