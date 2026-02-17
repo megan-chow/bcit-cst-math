@@ -1,3 +1,5 @@
+const INF = '∞';
+
 function displayContent() {
   const selector = document.getElementById('content-selector');
   const selectedValue = selector.value;
@@ -176,10 +178,6 @@ function convert_to_bin() {
     bias = 7;
   }
 
-  // const min_exp = -126;
-  // const max_exp = 127;
-  // const len_mantissa = 23;
-
   let num = document.getElementById("float-num").value;
   num = parseFloat(num);
   console.log(num);
@@ -254,25 +252,48 @@ function convert_to_dec() {
   if (num[0] === "1") {
     sign = "-";
   }
-  let mag = 0.0;
+
   let exponent = num.substring(1, 1 + exp_len);
-  console.log("exponent bits: " + exponent);
+  let mantissa = num.substring(1 + exp_len);
+  console.log(exponent);
+  console.log(mantissa);
+  if (exponent === '1'.repeat(exp_len)) {
+    if (mantissa === '0'.repeat(mant_len)) {
+      document.getElementById("full").textContent = sign + INF;
+      document.getElementById("sign").textContent = sign;
+      return;
+    }
+    else {
+      document.getElementById("full").textContent = "NaN";
+      document.getElementById("sign").textContent = "";
+    }
+    document.getElementById("exponent").textContent = "";
+    document.getElementById("mantissa").textContent = "";
+    return;
+  }
+  else if (exponent === '0'.repeat(exp_len) && mantissa === '0'.repeat(mant_len)) {
+    document.getElementById("full").textContent = sign + '0';
+    document.getElementById("sign").textContent = sign;
+    document.getElementById("exponent").textContent = "";
+    document.getElementById("mantissa").textContent = "";
+  }
+  let mag = 0.0;
+  // console.log("exponent bits: " + exponent);
   exponent = parseInt(exponent, 2) - bias;
-  console.log("exponent: " + exponent);
+  // console.log("exponent: " + exponent);
   if (exponent > -bias) {
     mag += Math.pow(2, exponent);
   }
   else {
     exponent += 1;
   }
-  let mantissa = num.substring(1 + exp_len);
-  console.log("mantissa bits: " + mantissa);
+  // console.log("mantissa bits: " + mantissa);
 
   for (let i = 0; i < mant_len; i++) {
     mag += Number(mantissa[i]) * Math.pow(2, exponent - i - 1);
   }
 
-  console.log(mag);
+  // console.log(mag);
 
   document.getElementById("full").textContent = sign + mag;
   document.getElementById("sign").textContent = "";

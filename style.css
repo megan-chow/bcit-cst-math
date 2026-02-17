@@ -11,6 +11,7 @@ input {
     width: 100%;
     margin-bottom: 1rem;
     border-radius: 10px;
+    font-size: 13pt;
 }
 
 button {
@@ -46,4 +47,5 @@ textarea {
 
 footer {
     text-align: center;
+    
 }
