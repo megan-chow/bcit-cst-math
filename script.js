@@ -1,32 +1,23 @@
 const INF = '∞';
 
-function displayContent() {
-  const selector = document.getElementById('content-selector');
-  const selectedValue = selector.value;
-  const cont = document.getElementById("content");
+function displayContent(value, btn) {
+  const cont = document.getElementById('content');
+
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 
   let file = '';
-
-  if (selectedValue === "binary") {
-    file = './binary.html';
-  }
-  else if (selectedValue === 'float') {
-    file = './float.html';
-  }
-  else {
-    cont.innerHTML = '';
-    return;
-  }
+  if (value === 'binary') file = './binary.html';
+  else if (value === 'float') file = './float.html';
+  else { cont.innerHTML = ''; return; }
 
   fetch(file)
     .then(response => response.text())
-    .then(html => {
-      cont.innerHTML = html;
-    })
+    .then(html => { cont.innerHTML = html; })
     .catch(err => {
-      cont.innerHTML = '<p>Error loading content.</p>';
-      console.error(err);
-  });
+        cont.innerHTML = '<p>Error loading content.</p>';
+        console.error(err);
+    });
 }
 
 function calculate() {
@@ -301,3 +292,8 @@ function convert_to_dec() {
   document.getElementById("mantissa").textContent = "";
 
 }
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  displayContent('binary', document.querySelector('.tab.active'));
+});

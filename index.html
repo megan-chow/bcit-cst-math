@@ -8,19 +8,16 @@
     </head>
 
     <body>
-        <header></header>
-        <select id="content-selector" onchange="displayContent()">
-            <option value="binary" selected>Binary Conversion</option>
-            <option value="float">Floating Point</option>
-        </select>
+        <header>
+            <h1>BCIT CST Math Helper</h1>
+            <nav class="tab-row">
+                <button class="tab active" onclick="displayContent('binary', this)">Binary Conversion</button>
+                <button class="tab" onclick="displayContent('float', this)">Floating Point</button>
+            </nav>
+        </header>
         <div id="content"></div>
         <footer>© 2026 Megan Chow</footer>
         <script src="script.js"></script>
-        <script>
-            window.addEventListener('DOMContentLoaded', () => {
-                displayContent();
-            });
-        </script>
     </body>
 
 </html>
